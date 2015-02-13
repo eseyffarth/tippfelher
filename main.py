@@ -96,8 +96,26 @@ def wrong_key(text):
     return out_text
 
 
+def wrong_spelling(text):
+    out_text = text
+    common_mistakes = {' seid ':' seit ',
+                        ' seit ':' seid ',
+                        'wider':' wieder',
+                        'wieder':'wider',
+                        ', das':', dass',
+                        ', dass':', das',
+                        'standard':'standart',
+                        'Standard':'Standart'}
+
+    for written_word in common_mistakes.keys():
+        out_text = out_text.replace(written_word, common_mistakes[written_word])
+
+    return out_text
+
+
 def obfucsate(text):
     # insert typos of all types
+    text = wrong_spelling(text)
     text = miss_shift(text)
     text = wrong_key(text)
     return text
