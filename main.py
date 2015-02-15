@@ -105,7 +105,9 @@ def wrong_spelling(text):
                         ', das':', dass',
                         ', dass':', das',
                         'standard':'standart',
-                        'Standard':'Standart'}
+                        'standart':'standard',
+                        'Standard':'Standart',
+                        'Standart':'Standard'}
 
     for written_word in common_mistakes.keys():
         out_text = out_text.replace(written_word, common_mistakes[written_word])
