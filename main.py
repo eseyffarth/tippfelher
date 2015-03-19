@@ -73,6 +73,8 @@ def wrong_key(text):
             out_text += get_nearby_char(letter)
         elif choice == 4:                   # 1 in 60 characters will be followed by an adjacent letter
             out_text += letter + get_nearby_char(letter)
+        elif choice == 7: # 1 in 60 characters will be skipped/deleted
+            continue
         else:
             out_text += letter
 
