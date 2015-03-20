@@ -22,16 +22,11 @@ def switch_letters(text):
 def miss_shift(text):
     out_text = ''
     for letter in text:
-        if letter.isupper():
-            choice = random.randint(1,6)            # 1 in 5 upper-case letters will be turned to lower-case
-            if choice == 1:
-                out_text += letter.lower()
-            else:
-                out_text += letter
+        if letter.isupper() and (random.randint(1,6) == 1): # 1 in 5 upper-case letters will be turned to lower-case
+            out_text += letter.lower()
         else:
             out_text += letter
     return out_text
-
 
 def get_nearby_char(char):
 
@@ -85,7 +80,7 @@ def wrong_spelling(text):
     out_text = text
     common_mistakes = {' seid ':' seit ',
                         ' seit ':' seid ',
-                        'wider':' wieder',
+                        'wider':'wieder',
                         'wieder':'wider',
                         ', das':', dass',
                         ', dass':', das',
