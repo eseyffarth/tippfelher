@@ -35,29 +35,36 @@ def miss_shift(text):
 
 def get_nearby_char(char):
 
-	# german keyboard layout
-	layout=['^', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'ß', '`'], \
-	            ['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ü', '*'], \
-	            ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ö', 'ä', '#'], \
-	            ['<', 'y', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '-'], \
-	            [ '',  '', '',  ' ', ' ', ' ', ' ', ' ',  '',  '',  '']
+	if not char:
+		return
 
-	if ((not char) or (not any(char in row for row in layout))): # no char or not found in layout
+	if not char in layout:
 		return char
 
 	for ix, row in enumerate(layout): # get index of char we want to manipulate
 		for iy, i in enumerate(row):
 			if i == char: # introduce the "typo", shift the index randomly by +-1
-				if i == ' ': # spacebar ...
-					iy += random.randint(-1, +5) # ... is a bit bigger
-				else:
-					iy += random.randint(-1, +1)
-				ix += random.randint(-1, +1)
-				ix = max(min(len(layout)-1, ix), 0) # prevent out of bounds
-				iy = max(min(len(layout[ix])-1, iy), 0)
-				return (layout[ix][iy])
+				while True:
+					if i == ' ': # spacebar ...
+						iy += random.randint(-1, +5) # ... is a bit bigger
+					else:
+						iy += random.randint(-1, +1)
+					ix += random.randint(-1, +1)
+					ix = max(min(len(layout)-1, ix), 0) # prevent out of bounds
+					iy = max(min(len(layout[ix])-1, iy), 0)
+					retval = layout[ix][iy]
+					if retval != '': # make sure we return something even while processing a char surrounded by '' in the layout
+						return retval
 
 def wrong_key(text):
+
+    # german keyboard layout
+    global layout
+    layout = ['^', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'ß', '`'], \
+             [ '', 'q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ü', '*'], \
+             [ '', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ö', 'ä', '#'], \
+             [ '', '<', 'y', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '-',  ''], \
+             [ '',  '',  '', '',  ' ', ' ', ' ', ' ', ' ',  '',  '',  '',  '']
 
     out_text = ''
     for letter in text:
@@ -71,7 +78,6 @@ def wrong_key(text):
 
 
     return out_text
-
 
 def wrong_spelling(text):
     out_text = text
