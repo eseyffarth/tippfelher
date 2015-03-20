@@ -95,12 +95,26 @@ def wrong_spelling(text):
 
     return out_text
 
+def double_capital(text):
+	out_text, prev, old_letter = '', '', ''
+	for letter in text:
+		choice = random.randint(1,61)
+		old_letter=letter
+		if (choice <= 2) and (prev != '') and prev.isupper():
+			letter = letter.upper()
+
+		prev = old_letter
+		out_text = out_text + letter
+
+	return out_text
+
 
 def obfucsate(text):
     # insert typos of all types
     text = wrong_spelling(text)
     text = miss_shift(text)
     text = wrong_key(text)
+    text = double_capital(text)
     return text
 
 
